@@ -26,6 +26,7 @@ def get_hashes(folderPath):
 		else:
 			hashlist[md5Hash] = []
 			hashlist[md5Hash].append(f)
+
 	return hashlist
 
 def get_duplicates(folderPath):
@@ -34,16 +35,24 @@ def get_duplicates(folderPath):
 	for foundHash in hashlist:
 		numFiles = len(hashlist[foundHash])
 		if numFiles > 1:
-			duplicates[foundHash] = {'numFiles': numFiles, 'filePaths': hashlist[foundHash]}
+			for i in range(0, numFiles):
+				if i == 0:
+					duplicates[foundHash] = {'numFiles': numFiles, 'filePaths': []}
+					duplicates[foundHash]['filePaths'].append({'fileCategory': 'Original', 'filePath': hashlist[foundHash][i]})
+				else:
+					duplicates[foundHash]['filePaths'].append({'fileCategory': 'Duplicate', 'filePath': hashlist[foundHash][i]})
 	return duplicates
 
 if __name__ == '__main__':
 	directory = sys.argv[1]
-	dupes = get_duplicates(directory)
-	for dupe in dupes:
-		for i in range(0, len(dupes[dupe]['filePaths'])):
-			if i == 0:
-				print('Original File: ' + dupes[dupe]['filePaths'][i])
-			else:
-				print('Duplicate File: ' + dupes[dupe]['filePaths'][i])
+	
+	a = get_duplicates(directory)
+	print('\n' + str(len(a)) + ' duplicated hash values:')
+	for key in a.keys():
+		print(key)
+	print('\n')
+	for k,v in a.items():
+		print('-- ' + str(k) + ' - ' + str(v['numFiles']) + ' files found')
+		for k in v['filePaths']:
+			print('\t' + str(k['fileCategory']) + ': ' + str(k['filePath']))
 		print('\n')
