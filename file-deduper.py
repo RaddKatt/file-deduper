@@ -34,9 +34,6 @@ def get_duplicates(folderPath):
 	for foundHash in hashlist:
 		numFiles = len(hashlist[foundHash])
 		if numFiles > 1:
-			'''print(foundHash + ': ' + str(numFiles))
-			for file in hashlist[foundHash]:
-				print('\t' + str(file))'''
 			duplicates[foundHash] = {'numFiles': numFiles, 'filePaths': hashlist[foundHash]}
 	return duplicates
 
