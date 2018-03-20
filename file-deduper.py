@@ -11,21 +11,21 @@ def get_md5(filePath):
 
 def get_folder_filenames(folderPath):
 	for fileName in os.listdir(folderPath):
-		fullFilePath = os.path.join(folderPath, fileName)
-		if os.path.isfile(fullFilePath):
-			yield os.path.abspath(fullFilePath)
+		if not fileName.startswith('._'):  #Exclude Mac Metadata files
+			fullFilePath = os.path.join(folderPath, fileName)
+			if os.path.isfile(fullFilePath):
+				yield os.path.abspath(fullFilePath)
 
 def get_hashes(folderPath):
 	hashlist = {}
 	for f in get_folder_filenames(folderPath):
 		md5Hash = get_md5(f)
 
-		if md5Hash != 'b6a68923cea360c9cea4708ada7fe3dd':  #Exclude Mac Metadata files
-			if md5Hash in hashlist:
-				hashlist[md5Hash].append(f)
-			else:
-				hashlist[md5Hash] = []
-				hashlist[md5Hash].append(f)
+		if md5Hash in hashlist:
+			hashlist[md5Hash].append(f)
+		else:
+			hashlist[md5Hash] = []
+			hashlist[md5Hash].append(f)
 	return hashlist
 
 def get_duplicates(folderPath):
@@ -44,4 +44,9 @@ if __name__ == '__main__':
 	directory = sys.argv[1]
 	dupes = get_duplicates(directory)
 	for dupe in dupes:
-		print(dupes[dupe]['filePaths'])
+		for i in range(0, len(dupes[dupe]['filePaths'])):
+			if i == 0:
+				print('Original File: ' + dupes[dupe]['filePaths'][i])
+			else:
+				print('Duplicate File: ' + dupes[dupe]['filePaths'][i])
+		print('\n')
