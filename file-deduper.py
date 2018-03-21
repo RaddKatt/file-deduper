@@ -69,9 +69,7 @@ def print_results(folderPath):
 def write_results(folderPath):
 	a = get_duplicates(folderPath)
 
-	print(a)
-	print('\n')
-
+	rows = [['filehash', 'numfiles', 'filepath', 'filecategory', 'filesize_in_bytes']]
 	for fileHash in a.keys():
 		for f in a[fileHash]['filePaths']:
 			row = []
@@ -80,7 +78,14 @@ def write_results(folderPath):
 			row.append(f['filePath'])
 			row.append(f['fileCategory'])
 			row.append(f['fileSize'])
-			print(row)
+			rows.append(row)
+
+	with open('test.csv', 'wb') as csvfile:
+		for i in rows:
+			writer = csv.writer(csvfile)
+			writer.writerow(i)
+	
+	return rows
 
 if __name__ == '__main__':
 	if len(sys.argv) < 2:
