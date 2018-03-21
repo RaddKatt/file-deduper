@@ -56,6 +56,9 @@ def print_results(folderPath):
 		print('\n')
 
 if __name__ == '__main__':
-	directory = sys.argv[1]
+	if len(sys.argv) < 2:
+		print >> sys.stderr, "FATAL Unsupported execution mode (expected filepath)"
+		sys.exit(1)
 	
+	directory = sys.argv[1]
 	print_results(directory)
