@@ -1,6 +1,6 @@
 # Test files
 # test/
-*.csv
+found.csv
 
 # Vim
 *.swp
