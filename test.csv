@@ -1,6 +1,0 @@
-filehash,numfiles,filepath,filecategory,filesize_in_bytes
-9ed16c750a6e6f1213b7ada47e67b172,2,/Users/mradka/gh-pub/file-deduper/test/othertest2.txt,Original,28
-9ed16c750a6e6f1213b7ada47e67b172,2,/Users/mradka/gh-pub/file-deduper/test/othertest1.txt,Duplicate,28
-57dab00f9fda06969dd3a2a1fa7e1e19,3,/Users/mradka/gh-pub/file-deduper/test/test4.txt,Original,49
-57dab00f9fda06969dd3a2a1fa7e1e19,3,/Users/mradka/gh-pub/file-deduper/test/test2.txt,Duplicate,49
-57dab00f9fda06969dd3a2a1fa7e1e19,3,/Users/mradka/gh-pub/file-deduper/test/test3.txt,Duplicate,49

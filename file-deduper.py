@@ -47,11 +47,11 @@ def get_duplicates(folderPath):
 		if numFiles > 1:
 			for i in range(0, numFiles):
 				fileSize = os.path.getsize(hashlist[foundHash][i])
+				fileCreateTime = os.path.getctime(hashlist[foundHash][i])
 				if i == 0:
 					duplicates[foundHash] = {'numFiles': numFiles, 'filePaths': []}
-					duplicates[foundHash]['filePaths'].append({'fileCategory': 'Original', 'filePath': hashlist[foundHash][i], 'fileSize': fileSize})
-				else:
-					duplicates[foundHash]['filePaths'].append({'fileCategory': 'Duplicate', 'filePath': hashlist[foundHash][i], 'fileSize': fileSize})
+				duplicates[foundHash]['filePaths'].append({'fileCategory': 'Original', 'filePath': hashlist[foundHash][i], 'fileSize': fileSize, 'fileCreateTime': fileCreateTime})
+	
 	return duplicates
 
 def print_results(folderPath):
@@ -69,7 +69,7 @@ def print_results(folderPath):
 def write_results(folderPath):
 	a = get_duplicates(folderPath)
 
-	rows = [['filehash', 'numfiles', 'filepath', 'filecategory', 'filesize_in_bytes']]
+	rows = [['filehash', 'numfiles', 'filepath', 'filecategory', 'filesize_in_bytes', 'file_creation_time']]
 	for fileHash in a.keys():
 		for f in a[fileHash]['filePaths']:
 			row = []
@@ -78,9 +78,10 @@ def write_results(folderPath):
 			row.append(f['filePath'])
 			row.append(f['fileCategory'])
 			row.append(f['fileSize'])
+			row.append(f['fileCreateTime'])
 			rows.append(row)
 
-	with open('test.csv', 'wb') as csvfile:
+	with open('found.csv', 'wb') as csvfile:
 		for i in rows:
 			writer = csv.writer(csvfile)
 			writer.writerow(i)
