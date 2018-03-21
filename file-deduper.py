@@ -43,10 +43,8 @@ def get_duplicates(folderPath):
 					duplicates[foundHash]['filePaths'].append({'fileCategory': 'Duplicate', 'filePath': hashlist[foundHash][i]})
 	return duplicates
 
-if __name__ == '__main__':
-	directory = sys.argv[1]
-	
-	a = get_duplicates(directory)
+def print_results(folderPath):
+	a = get_duplicates(folderPath)
 	print('\n' + str(len(a)) + ' duplicated hash values:')
 	for key in a.keys():
 		print(key)
@@ -56,3 +54,8 @@ if __name__ == '__main__':
 		for k in v['filePaths']:
 			print('\t' + str(k['fileCategory']) + ': ' + str(k['filePath']))
 		print('\n')
+
+if __name__ == '__main__':
+	directory = sys.argv[1]
+	
+	print_results(directory)
