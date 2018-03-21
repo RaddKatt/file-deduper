@@ -10,6 +10,7 @@ Written using:
 import hashlib	# For calculating hashes
 import os	# For reading directory contents
 import sys	# For command-line args
+import csv	# For writing results file
 
 def get_md5(filePath):
 	with open(filePath, 'rb') as fileToCheck:
@@ -65,6 +66,22 @@ def print_results(folderPath):
 			print('\t' + k['fileCategory'] + ': ' + str(k['filePath']) + '\t\t(' + str(k['fileSize']) + " bytes)")
 		print('\n')
 
+def write_results(folderPath):
+	a = get_duplicates(folderPath)
+
+	print(a)
+	print('\n')
+
+	for fileHash in a.keys():
+		for f in a[fileHash]['filePaths']:
+			row = []
+			row.append(fileHash)
+			row.append(a[fileHash]['numFiles'])
+			row.append(f['filePath'])
+			row.append(f['fileCategory'])
+			row.append(f['fileSize'])
+			print(row)
+
 if __name__ == '__main__':
 	if len(sys.argv) < 2:
 		print >> sys.stderr, "FATAL Unsupported execution mode (expected filepath)"
@@ -72,3 +89,4 @@ if __name__ == '__main__':
 	
 	directory = sys.argv[1]
 	print_results(directory)
+	write_results(directory)
