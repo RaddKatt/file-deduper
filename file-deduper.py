@@ -45,11 +45,12 @@ def get_duplicates(folderPath):
 		numFiles = len(hashlist[foundHash])
 		if numFiles > 1:
 			for i in range(0, numFiles):
+				fileSize = os.path.getsize(hashlist[foundHash][i])
 				if i == 0:
 					duplicates[foundHash] = {'numFiles': numFiles, 'filePaths': []}
-					duplicates[foundHash]['filePaths'].append({'fileCategory': 'Original', 'filePath': hashlist[foundHash][i]})
+					duplicates[foundHash]['filePaths'].append({'fileCategory': 'Original', 'filePath': hashlist[foundHash][i], 'fileSize': fileSize})
 				else:
-					duplicates[foundHash]['filePaths'].append({'fileCategory': 'Duplicate', 'filePath': hashlist[foundHash][i]})
+					duplicates[foundHash]['filePaths'].append({'fileCategory': 'Duplicate', 'filePath': hashlist[foundHash][i], 'fileSize': fileSize})
 	return duplicates
 
 def print_results(folderPath):
@@ -61,7 +62,7 @@ def print_results(folderPath):
 	for k,v in a.items():
 		print('-- ' + str(k) + ' - ' + str(v['numFiles']) + ' files found')
 		for k in v['filePaths']:
-			print('\t' + str(k['fileCategory']) + ': ' + str(k['filePath']))
+			print('\t' + k['fileCategory'] + ': ' + str(k['filePath']) + '\t\t(' + str(k['fileSize']) + " bytes)")
 		print('\n')
 
 if __name__ == '__main__':
